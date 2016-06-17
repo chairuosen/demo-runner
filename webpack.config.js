@@ -9,7 +9,8 @@ var htmlOption = {
 
 module.exports = {
     resolve:{
-        root:[path.join(__dirname,"client")]
+        root:[path.join(__dirname,"client")],
+        extensions:["",".js",".vue"]
     },
     entry:{
         'main':['./client/main.js']

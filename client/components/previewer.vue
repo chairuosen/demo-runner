@@ -6,9 +6,6 @@
         <div v-el:template class="template" style="display:none;">
             <style>{{{css}}}</style>
             {{{html}}}
-            <script>
-                {{{js}}}
-            </script>
         </div>
         <iframe v-el:iframe frameborder="0"></iframe>
     </div>
@@ -21,30 +18,33 @@
             css:String
         },
         methods: {
-            setHtml:function (html) {
+            setHtml:function (html,js) {
                 var iframe = this.$els.iframe;
                 var _window = iframe.contentWindow;
                 _window.document.documentElement.innerHTML = html;
+                _window.eval(js);
             },
             preview:function () {
                 var vm = this;
                 require('vue').nextTick(function () {
                     var html = $(vm.$els.template).html();
-                    vm.setHtml(html);
+                    vm.setHtml(html,vm.js);
                 })
             }
         },
         components: {},
-        watch:{
-            html:function () {
-                this.preview();
-            },
-            js:function () {
-                this.preview();
-            },
-            css:function () {
-                this.preview();
+        ready:function () {
+            var vm = this;
+            function getCharFromCode(code){
+                return String.fromCharCode(code).toLowerCase();
             }
+            $(document).off('.preview').on('keydown.preview', function(e) {
+                if((e.ctrlKey||e.metaKey) && (getCharFromCode(e.which) == 's')) {
+                    e.preventDefault();
+                    vm.preview();
+                    return false;
+                }
+            });
         }
     }
 </script>
