@@ -13,9 +13,13 @@
         width:50%;
         height:100%;
     }
-    .top,.bottom{
+    .height-50{
         height:50%;
-        width:100%;
+    }
+    .overflow-scroll{
+        overflow:scroll;
+    }
+    .edit-area{
         border:1px solid #333;
         &[name]{
             position:relative;
@@ -46,19 +50,24 @@
 </style>
 <template>
     <div class="left">
-        <div class="top" name="html">
+        <div class="edit-area" style="height:50%;" name="html">
             <editor :content.sync="source.html" lang="html" ></editor>
         </div>
-        <div class="bottom" name="less">
-            <editor :content.sync="source.less" lang="less" ></editor>
-        </div>
-    </div>
-    <div class="right">
-        <div class="top" name="js">
+        <div class="edit-area" style="height:50%;" name="js">
             <editor :content.sync="source.js" lang="javascript" ></editor>
         </div>
-        <div class="bottom" name="result">
-            <previewer :html="source.html" :less="source.less" :js="source.js"></previewer>
+
+    </div>
+    <div class="right">
+
+        <div class="edit-area" style="height:10%;" name="external">
+            <external :resource="resource"></external>
+        </div>
+        <div class="edit-area" style="height:40%;" name="less">
+            <editor :content.sync="source.less" lang="less" ></editor>
+        </div>
+        <div class="edit-area" style="height:50%;" name="result">
+            <previewer :html="source.html" :less="source.less" :resource="resource" :js="source.js"></previewer>
         </div>
     </div>
 </template>
@@ -71,13 +80,15 @@
                     html:"",
                     less:"",
                     js:""
-                }
+                },
+                resource:[]
             }
         },
         methods: {},
         components: {
-            editor:require('components/editor.vue'),
-            previewer:require('components/previewer.vue')
+            editor:require('components/editor'),
+            previewer:require('components/previewer'),
+            external:require('components/external')
         },
         ready: function () {
 
