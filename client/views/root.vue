@@ -13,6 +13,26 @@
         width:50%;
         height:100%;
     }
+    .top,.bottom{
+        height:50%;
+        width:100%;
+        border:1px solid #333;
+        &[name]{
+            position:relative;
+            &:after{
+                content:attr(name);
+                display:block;
+                position:absolute;
+                top:0;
+                right:0;
+                background:rgba(0,0,0,0.2);
+                color:#fff;
+                padding:0 5px;
+                line-height:16px;
+                font-size:12px;
+            }
+        }
+    }
     .left {
         left:0;
         .editor{
@@ -26,45 +46,41 @@
 </style>
 <template>
     <div class="left">
-        <div id="editor" class="editor">111</div>
+        <div class="top" name="html">
+            <editor :content.sync="source.html" lang="html" ></editor>
+        </div>
+        <div class="bottom" name="css">
+            <editor :content.sync="source.css" lang="css" ></editor>
+        </div>
     </div>
     <div class="right">
-        <iframe v-el:iframe frameborder="0"></iframe>
+        <div class="top" name="js">
+            <editor :content.sync="source.js" lang="javascript" ></editor>
+        </div>
+        <div class="bottom" name="result">
+            <previewer :html="source.html" :css="source.css" :js="source.js"></previewer>
+        </div>
     </div>
 </template>
 
 <script>
-    var ace = require('brace');
-    require('brace/mode/javascript');
-    require('brace/theme/monokai');
-
-
-
     module.exports = {
         data: function () {
             return {
                 source:{
-                    html:""
+                    html:"",
+                    css:"",
+                    js:""
                 }
             }
         },
-        methods: {
-            preview:function (html) {
-                var iframe = this.$els.iframe;
-                var _window = iframe.contentWindow;
-                _window.document.documentElement.innerHTML = html;
-            }
+        methods: {},
+        components: {
+            editor:require('components/editor.vue'),
+            previewer:require('components/previewer.vue')
         },
-        watch:{
-            'source.html':function (val) {
-                this.preview(val);
-            }
-        },
-        components: {},
         ready: function () {
-            var editor = ace.edit('editor');
-            editor.getSession().setMode('ace/mode/javascript');
-            editor.setTheme('ace/theme/monokai');
+
         }
     }
 </script>
