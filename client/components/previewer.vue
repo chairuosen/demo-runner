@@ -35,9 +35,7 @@
         components: {},
         ready:function () {
             var vm = this;
-            function getCharFromCode(code){
-                return String.fromCharCode(code).toLowerCase();
-            }
+
             $(document).on('save',function () {
                 vm.preview();
             })

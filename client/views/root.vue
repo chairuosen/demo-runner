@@ -13,6 +13,9 @@
         methods: {},
         components: {},
         ready: function () {
+            function getCharFromCode(code){
+                return String.fromCharCode(code).toLowerCase();
+            }
             $(document).off('.preview').on('keydown.preview', function(e) {
                 if((e.ctrlKey||e.metaKey) && (getCharFromCode(e.which) == 's')) {
                     e.preventDefault();
