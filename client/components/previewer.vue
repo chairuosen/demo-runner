@@ -38,13 +38,9 @@
             function getCharFromCode(code){
                 return String.fromCharCode(code).toLowerCase();
             }
-            $(document).off('.preview').on('keydown.preview', function(e) {
-                if((e.ctrlKey||e.metaKey) && (getCharFromCode(e.which) == 's')) {
-                    e.preventDefault();
-                    vm.preview();
-                    return false;
-                }
-            });
+            $(document).on('save',function () {
+                vm.preview();
+            })
         }
     }
 </script>

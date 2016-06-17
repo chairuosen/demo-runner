@@ -13,7 +13,13 @@
         methods: {},
         components: {},
         ready: function () {
-
+            $(document).off('.preview').on('keydown.preview', function(e) {
+                if((e.ctrlKey||e.metaKey) && (getCharFromCode(e.which) == 's')) {
+                    e.preventDefault();
+                    $(document).trigger('save');
+                    return false;
+                }
+            });
         }
     }
 </script>
