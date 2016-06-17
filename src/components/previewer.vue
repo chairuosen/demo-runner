@@ -51,9 +51,9 @@
                 _window.eval(loadStyleUrl.toString());
                 resource.forEach(function (item) {
                     if(item.type=='style'){
-                        _window.eval('loadStyleUrl('+item.url+')');
+                        _window.eval('loadStyleUrl("'+item.url+'")');
                     }else if(item.type =='script'){
-                        _window.eval('loadScriptUrl('+item.url+')');
+                        _window.eval('loadScriptUrl("'+item.url+'")');
                     }
                 });
                 _window.eval(js);
