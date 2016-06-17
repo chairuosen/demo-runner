@@ -42,7 +42,7 @@
             var theme = this.theme||'chrome';
             require('brace/mode/'+lang);
             require('brace/theme/'+theme);
-            require('emmet/emmet');
+            window.emmet = require('emmet/emmet').emmet;
             require('brace/ext/emmet');
 
             var editor = vm.editor = ace.edit(this.$el);
