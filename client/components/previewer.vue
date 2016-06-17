@@ -11,11 +11,17 @@
     </div>
 </template>
 <script>
+    var less = require('less');
     module.exports = {
         props:{
             html:String,
             js:String,
-            css:String
+            less:String
+        },
+        data:function () {
+            return {
+                css:""
+            }
         },
         methods: {
             setHtml:function (html,js) {
@@ -26,10 +32,13 @@
             },
             preview:function () {
                 var vm = this;
-                require('vue').nextTick(function () {
-                    var html = $(vm.$els.template).html();
-                    vm.setHtml(html,vm.js);
-                })
+                less.render(this.less||"").then(function(res){
+                    vm.css = res.css;
+                    require('vue').nextTick(function () {
+                        var html = $(vm.$els.template).html();
+                        vm.setHtml(html,vm.js);
+                    })
+                });
             }
         },
         components: {},

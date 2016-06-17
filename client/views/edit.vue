@@ -49,8 +49,8 @@
         <div class="top" name="html">
             <editor :content.sync="source.html" lang="html" ></editor>
         </div>
-        <div class="bottom" name="css">
-            <editor :content.sync="source.css" lang="css" ></editor>
+        <div class="bottom" name="less">
+            <editor :content.sync="source.less" lang="less" ></editor>
         </div>
     </div>
     <div class="right">
@@ -58,7 +58,7 @@
             <editor :content.sync="source.js" lang="javascript" ></editor>
         </div>
         <div class="bottom" name="result">
-            <previewer :html="source.html" :css="source.css" :js="source.js"></previewer>
+            <previewer :html="source.html" :less="source.less" :js="source.js"></previewer>
         </div>
     </div>
 </template>
@@ -69,7 +69,7 @@
             return {
                 source:{
                     html:"",
-                    css:"",
+                    less:"",
                     js:""
                 }
             }
