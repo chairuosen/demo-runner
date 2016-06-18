@@ -2,8 +2,8 @@
     
 </style>
 <template>
-    <div>
-        <div class="iframe" v-el:iframe></div>
+    <div style="height:100%">
+        <div class="iframe" style="height:100%" v-el:iframe></div>
     </div>
 </template>
 <script>
