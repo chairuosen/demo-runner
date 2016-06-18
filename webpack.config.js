@@ -43,7 +43,6 @@ module.exports = {
             path.join(__dirname,'node_modules','less')
         ]
     },
-    devtool:"cheap-module-source-map",
     plugins:[
         new HtmlWebpackPlugin(htmlOption)
     ]
