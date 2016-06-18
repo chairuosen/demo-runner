@@ -50,21 +50,22 @@
 </style>
 <template>
     <div class="left">
-        <div class="edit-area" style="height:50%;" name="html">
+        <div class="edit-area" style="height:40%;" name="html">
             <editor :content.sync="source.html" lang="html" ></editor>
         </div>
-        <div class="edit-area" style="height:50%;" name="js">
+        <div class="edit-area" style="height:60%;" name="js">
             <editor :content.sync="source.js" lang="javascript" ></editor>
         </div>
 
     </div>
     <div class="right">
 
-        <div class="edit-area" style="height:10%;" name="external">
-            <external :resource="resource"></external>
-        </div>
+
         <div class="edit-area" style="height:40%;" name="less">
             <editor :content.sync="source.less" lang="less" ></editor>
+        </div>
+        <div class="edit-area" style="height:10%;" name="external">
+            <external :resource="resource"></external>
         </div>
         <div class="edit-area" style="height:50%;" name="result">
             <previewer :html="source.html" :less="source.less" :resource="resource" :js="source.js"></previewer>
