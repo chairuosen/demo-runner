@@ -35,7 +35,7 @@
     "style-loader": "^0.13.1",
     "url-loader": "^0.5.7",
     "vue": "^1.0.24",
-    "vue-ace-editor": "^1.0.0",
+    "vue-ace-editor": "^1.0.1",
     "vue-hot-reload-api": "^1.2.0",
     "vue-html-loader": "^1.2.2",
     "vue-loader": "^3.0.4",
