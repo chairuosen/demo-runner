@@ -1,7 +1,13 @@
 var webpack = require('webpack');
 var HtmlWebpackPlugin = require('html-webpack-plugin');
 var path = require('path');
+var argv = require('yargs').argv;
 
+var uglyPlugin = new webpack.optimize.UglifyJsPlugin({
+    compress: {
+        warnings: false
+    }
+});
 
 var htmlOption = {
     title:"Demo Runner"
@@ -46,4 +52,8 @@ module.exports = {
     plugins:[
         new HtmlWebpackPlugin(htmlOption)
     ]
+};
+
+if(argv.production){
+    module.exports.plugins.push(uglyPlugin)
 }
