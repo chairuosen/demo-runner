@@ -3,12 +3,7 @@
 </style>
 <template>
     <div>
-        <div v-el:template class="template" style="display:none;">
-
-            <style>{{{css}}}</style>
-            {{{html}}}
-        </div>
-        <iframe v-el:iframe frameborder="0"></iframe>
+        <div class="iframe" v-el:iframe></div>
     </div>
 </template>
 <script>
@@ -43,29 +38,43 @@
             }
         },
         methods: {
-            setHtml:function (html,js,resource) {
-                var iframe = this.$els.iframe;
+            setHtml:function (html,css,js,resource) {
+                var $iframe = $('<iframe>');
+                $iframe.attr('frameborder','0');
+                $iframe.attr('height','100%');
+                $iframe.attr('width','100%');
+                $(this.$els.iframe).empty().append($iframe);
+                var iframe = $iframe[0];
                 var _window = iframe.contentWindow;
-                _window.document.documentElement.innerHTML = html;
-                _window.eval(loadScriptUrl.toString());
-                _window.eval(loadStyleUrl.toString());
+                var htmlTemplate = "<html><head>__head__</head><body>__body__</body></html>";
+                var headHtml = "<style>"+css+"<\/style>";
+
                 resource.forEach(function (item) {
                     if(item.type=='style'){
-                        _window.eval('loadStyleUrl("'+item.url+'")');
+                        headHtml += ( "<link rel='stylesheet' type='text/css' href='"+item.url+"'>" );
                     }else if(item.type =='script'){
-                        _window.eval('loadScriptUrl("'+item.url+'")');
+                        headHtml += ( "<script src='"+ item.url +"'><\/script>" );
                     }
                 });
-                _window.eval(js);
+
+                htmlTemplate = htmlTemplate.replace('__head__',headHtml);
+                htmlTemplate = htmlTemplate.replace('__body__',html);
+
+                _window.document.open();
+                _window.document.write(htmlTemplate);
+                _window.document.close();
+
+                var inter = setInterval(function() {
+                    if (_window.document.readyState === "complete") {
+                        clearInterval(inter);
+                        _window.eval(js);
+                    }
+                }, 100);
             },
             preview:function () {
                 var vm = this;
                 less.render(this.less||"").then(function(res){
-                    vm.css = res.css;
-                    require('vue').nextTick(function () {
-                        var html = $(vm.$els.template).html();
-                        vm.setHtml(html,vm.js,vm.resource||[]);
-                    })
+                    vm.setHtml(vm.html,res.css,vm.js,vm.resource||[]);
                 });
             }
         },
