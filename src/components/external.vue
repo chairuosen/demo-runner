@@ -27,7 +27,7 @@
                 </option>
             </select>
 
-            <input type="text" style="width:400px;" v-model="newResource.url">
+            <input type="text" style="width:400px;" placeholder="url" v-model="newResource.url">
 
             <select v-model="selectedLib">
                 <option v-for="option in libOptions" :value="$index">
