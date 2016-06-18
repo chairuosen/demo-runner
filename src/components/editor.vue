@@ -10,6 +10,10 @@
 <script>
     var ace = require('brace');
 
+    require(['emmet/emmet'],function (data) {
+        window.emmet = data.emmet;
+    });
+
     module.exports = {
         props:{
             content:{
@@ -42,7 +46,6 @@
             var theme = this.theme||'chrome';
             require('brace/mode/'+lang);
             require('brace/theme/'+theme);
-            window.emmet = require('emmet/emmet').emmet;
             require('brace/ext/emmet');
 
             var editor = vm.editor = ace.edit(this.$el);
@@ -53,7 +56,6 @@
             editor.setTheme('ace/theme/'+theme);
 
             editor.setValue(this.content,1);
-            window.editor = editor;
 
             editor.on('change',function () {
                 vm.content = editor.getValue();
