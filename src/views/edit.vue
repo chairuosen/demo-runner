@@ -87,7 +87,7 @@
         },
         methods: {},
         components: {
-            editor:require('components/editor'),
+            editor:require('vue-ace-editor'),
             previewer:require('components/previewer'),
             external:require('components/external')
         },
