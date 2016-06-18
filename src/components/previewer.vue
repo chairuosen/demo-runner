@@ -56,6 +56,7 @@
                         headHtml += ( "<script src='"+ item.url +"'><\/script>" );
                     }
                 });
+                headHtml += ( "<script>window.onload=function(){"+js+"}<\/script>" );
 
                 htmlTemplate = htmlTemplate.replace('__head__',headHtml);
                 htmlTemplate = htmlTemplate.replace('__body__',html);
@@ -63,13 +64,6 @@
                 _window.document.open();
                 _window.document.write(htmlTemplate);
                 _window.document.close();
-
-                var inter = setInterval(function() {
-                    if (_window.document.readyState === "complete") {
-                        clearInterval(inter);
-                        _window.eval(js);
-                    }
-                }, 100);
             },
             preview:function () {
                 var vm = this;
