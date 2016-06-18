@@ -7,20 +7,20 @@ Demo: http://demo.ruosen.io/demo-runner/
 Press `cmd + s` in editor to preview
 
 
-1. Init
+# Init
 
-    ```
-    npm install
-    ```
+```
+npm install
+```
     
-2. Dev
+# Dev
 
-    ```
-    npm run dev
-    ```
+```
+npm run dev
+```
 
-3. Build
+# Build
 
-    ```
-    npm run build
-    ```
+```
+npm run build
+```
