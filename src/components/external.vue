@@ -6,6 +6,7 @@
             padding-left:5px;
         }
     }
+
     .list-container{
         height:100%;
         overflow:scroll;
