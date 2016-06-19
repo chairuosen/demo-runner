@@ -52,8 +52,6 @@
         return JSON.parse(JSON.stringify(a));
     }
 
-    var a = 1;
-
     module.exports = {
         props:{
             resource:Array
