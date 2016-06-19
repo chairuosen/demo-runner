@@ -6,7 +6,6 @@
             padding-left:5px;
         }
     }
-
     .list-container{
         height:100%;
         overflow:scroll;
@@ -52,6 +51,8 @@
     function clone(a){
         return JSON.parse(JSON.stringify(a));
     }
+
+    var a = 1;
 
     module.exports = {
         props:{
