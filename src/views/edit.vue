@@ -124,10 +124,10 @@
         },
         events:{
             'vue-ace-editor:init':function () {
-                require('vue-ace-editor/node_modules/brace/mode/html');
-                require('vue-ace-editor/node_modules/brace/mode/javascript');
-                require('vue-ace-editor/node_modules/brace/mode/less');
-                require('vue-ace-editor/node_modules/brace/theme/chrome');
+                require('brace/mode/html');
+                require('bracebrace/mode/javascript');
+                require('brace/mode/less');
+                require('brace/theme/chrome');
             }
         },
         ready: function () {
