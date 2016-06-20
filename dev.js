@@ -14,7 +14,7 @@ config.plugins.push(function() {
     this.plugin('done', function(stats) {
         setTimeout(function () {
             console.log('====================================')
-            console.log('Server listen: http://localhost:'+port);
+            console.log('Client running on: http://localhost:'+port);
             console.log('====================================')
         },0);
     })
@@ -35,3 +35,4 @@ var server = new WebpackDevServer(webpack(config), {
     }
 });
 server.listen(port, "localhost");
+require('./server/app.js');

@@ -16,5 +16,5 @@ app.use('/api',require('./router'));
 // app.use(express.static('./dist'));
 
 app.listen(port,function () {
-    console.log('Running on '+port);
+    console.log('Server running on '+port);
 });
