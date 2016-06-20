@@ -2,7 +2,7 @@ var sqlite3 = require('sqlite3').verbose();
 var Promise = require("bluebird");
 
 var memDatabase = ":memory:";
-var fileDatabase = '../database/database.db';
+var fileDatabase = __dirname+'/../database/database.db';
 
 var tableName = "test";
 
