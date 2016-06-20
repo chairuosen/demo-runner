@@ -14,7 +14,7 @@ function getInstance() {
         if(dbInstance){
             resolve(dbInstance);
         }else{
-            dbInstance = new sqlite3.Database(memDatabase,function(err) {
+            dbInstance = new sqlite3.Database(fileDatabase,function(err) {
                 if(err) reject(err);
                 resolve(dbInstance);
             });
