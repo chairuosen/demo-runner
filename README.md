@@ -15,6 +15,8 @@ npm install
     
 # Dev
 
+start both client-dev and server
+
 ```
 npm run dev
 ```
@@ -24,3 +26,11 @@ npm run dev
 ```
 npm run build
 ```
+
+# Start Server
+
+```
+node server/app.js 
+```
+
+or using pm2
