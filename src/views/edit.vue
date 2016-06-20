@@ -125,7 +125,7 @@
         events:{
             'vue-ace-editor:init':function () {
                 require('brace/mode/html');
-                require('bracebrace/mode/javascript');
+                require('brace/mode/javascript');
                 require('brace/mode/less');
                 require('brace/theme/chrome');
             }
