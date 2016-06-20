@@ -2,6 +2,8 @@ var $ = require('jquery');
 var Promise = require('bluebird');
 var config = require('./config');
 
+config.backend = config.backend.replace('localhost',window.location.host.split(':')[0]);
+
 module.exports = {
     get:function (url,data) {
         return $.get(config.backend+url,data)
