@@ -144,7 +144,9 @@
                         });
                     }
                     vm.show = true;
-                    $(document).trigger('preview');
+                    require('vue').nextTick(function () {
+                        $(document).trigger('preview');
+                    })
                 });
             }else{
                 vm.show = true;

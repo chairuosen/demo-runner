@@ -8,23 +8,6 @@
 </template>
 <script>
     var less = require('less');
-
-    var loadStyleUrl = function loadStyleUrl(url) {
-        var link  = document.createElement('link');
-        link.rel  = 'stylesheet';
-        link.type = 'text/css';
-        link.href = url;
-        document.getElementsByTagName('head')[0].appendChild(link);
-    };
-
-
-
-    var loadScriptUrl = function loadScriptUrl(src) {
-        var script = document.createElement('script');
-        script.src = src;
-        document.getElementsByTagName("head")[0].appendChild(script);
-    }
-
     module.exports = {
         props:{
             html:String,
