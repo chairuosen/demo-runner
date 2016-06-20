@@ -136,11 +136,13 @@
                         });
                     }
                     vm.show = true;
+                    $(document).trigger('preview');
                 });
             }else{
                 vm.show = true;
             }
             $(document).on('save',function () {
+                $(document).trigger('preview');
                 api.saveCode(vm.source).then(function (res) {
                     changeLocation(res.id)
                 });

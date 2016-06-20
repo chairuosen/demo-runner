@@ -76,7 +76,7 @@
         ready:function () {
             var vm = this;
 
-            $(document).on('save',function () {
+            $(document).on('preview',function () {
                 vm.preview();
             })
         }
