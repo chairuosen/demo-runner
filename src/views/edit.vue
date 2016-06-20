@@ -122,6 +122,14 @@
             previewer:require('components/previewer'),
             external:require('components/external')
         },
+        events:{
+            'vue-ace-editor:init':function () {
+                require('vue-ace-editor/node_modules/brace/mode/html');
+                require('vue-ace-editor/node_modules/brace/mode/javascript');
+                require('vue-ace-editor/node_modules/brace/mode/less');
+                require('vue-ace-editor/node_modules/brace/theme/chrome');
+            }
+        },
         ready: function () {
             var vm = this;
             var initId = getLocationParam('id');
