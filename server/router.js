@@ -11,6 +11,10 @@ router.post('/save',function (req,res) {
 });
 
 router.get('/get',function (req,res) {
+    if( ! /^[0-9a-z]{32}$/.test(req.query.id)  ){
+        res.status(500).send("ID invalid");
+        return;
+    }
     model.get(req.query.id).then(function (data) {
         res.send({data:data});
     },function (err) {

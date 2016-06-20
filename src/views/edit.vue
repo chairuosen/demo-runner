@@ -4,7 +4,7 @@
         padding:0;
         box-sizing:border-box;
     }
-    html,body{
+    html,body,.height100{
         height:100%;
     }
     .left,.right{
@@ -49,26 +49,28 @@
     }
 </style>
 <template>
-    <div class="left">
-        <div class="edit-area" style="height:40%;" name="html">
-            <editor :content.sync="source.html" lang="html" ></editor>
-        </div>
-        <div class="edit-area" style="height:60%;" name="js">
-            <editor :content.sync="source.js" lang="javascript" ></editor>
-        </div>
+    <div class="height100" v-show="show">
+        <div class="left">
+            <div class="edit-area" style="height:40%;" name="html">
+                <editor :content.sync="source.html" lang="html" ></editor>
+            </div>
+            <div class="edit-area" style="height:60%;" name="js">
+                <editor :content.sync="source.js" lang="javascript" ></editor>
+            </div>
 
-    </div>
-    <div class="right">
+        </div>
+        <div class="right">
 
 
-        <div class="edit-area" style="height:40%;" name="less">
-            <editor :content.sync="source.less" lang="less" ></editor>
-        </div>
-        <div class="edit-area" style="height:10%;" name="external">
-            <external :resource="resource"></external>
-        </div>
-        <div class="edit-area" style="height:50%;" name="result">
-            <previewer :html="source.html" :less="source.less" :resource="resource" :js="source.js"></previewer>
+            <div class="edit-area" style="height:40%;" name="less">
+                <editor :content.sync="source.less" lang="less" ></editor>
+            </div>
+            <div class="edit-area" style="height:10%;" name="external">
+                <external :resource="resource"></external>
+            </div>
+            <div class="edit-area" style="height:50%;" name="result">
+                <previewer :html="source.html" :less="source.less" :resource="resource" :js="source.js"></previewer>
+            </div>
         </div>
     </div>
 </template>
@@ -87,9 +89,25 @@
         }
     });
 
+    function changeLocation(id) {
+        window.history.replaceState(null, document.title, "?id="+id);
+    }
+
+    function getLocationParam(name) {
+        var url = window.location.href;
+        name = name.replace(/[\[\]]/g, "\\$&");
+        var regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)"),
+                results = regex.exec(url);
+        if (!results) return null;
+        if (!results[2]) return '';
+        return decodeURIComponent(results[2].replace(/\+/g, " "));
+    }
+
+
     module.exports = {
         data: function () {
             return {
+                show:false,
                 source:{
                     html:"",
                     less:"",
@@ -106,12 +124,24 @@
         },
         ready: function () {
             var vm = this;
+            var initId = getLocationParam('id');
+            if(initId){
+                api.getCode(initId).then(function (res) {
+                    if(res.data){
+                        $.extend(vm.source,{
+                            html:res.data.html,
+                            less:res.data.less,
+                            js:res.data.js
+                        });
+                    }
+                    vm.show = true;
+                });
+            }else{
+                vm.show = true;
+            }
             $(document).on('save',function () {
                 api.saveCode(vm.source).then(function (res) {
-                    console.log(res.id);
-                    return api.getCode(res.id).then(function (res) {
-                        console.log(res.data);
-                    })
+                    changeLocation(res.id)
                 });
             });
         }
