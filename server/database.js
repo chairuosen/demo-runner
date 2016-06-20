@@ -121,13 +121,22 @@ function get(k) {
 
 var initPromise = createTable();
 
+var base64 = {
+    en:function (str) {
+        return new Buffer(str).toString('base64')
+    },
+    de:function (base64) {
+        return new Buffer(base64, 'base64').toString('utf-8')
+    }
+};
+
 module.exports = {
     set:function (k,v) {
-        return set(k,JSON.stringify({v:v}));
+        return set(k,base64.en(JSON.stringify({v:v})));
     },
     get:function (k) {
         return get(k).then(function (v) {
-            return v && JSON.parse(v).v;
+            return v && JSON.parse(base64.de(v)).v;
         })
     }
 };
