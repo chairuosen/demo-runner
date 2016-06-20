@@ -12,7 +12,7 @@ var dbInstance;
 function getInstance() {
     return new Promise(function (resolve,reject) {
         if(dbInstance){
-            return resolve(dbInstance);
+            resolve(dbInstance);
         }else{
             dbInstance = new sqlite3.Database(memDatabase,function(err) {
                 if(err) reject(err);
@@ -27,7 +27,10 @@ function dbFunctionWrap(name) {
         var args = Array.prototype.slice.call(arguments);
         return new Promise(function (resolve,reject) {
             dbInstance[name].apply(dbInstance,args.concat([function (err,data) {
-                if(err) reject(err);
+                if(err) {
+                    console.error(err);
+                    reject(err);
+                }
                 resolve(data);
             }]));
         })
@@ -66,6 +69,15 @@ function showTable() {
         return tables
     })
 }
+function logTable() {
+    var arr = [];
+    return db.each('SELECT * FROM '+tableName+'',function (err,res) {
+        arr.push(res);
+    }).then(function () {
+        console.log(arr);
+        return arr;
+    });
+}
 
 function tableExists(name) {
     return showTable().then(function (tables) {
@@ -85,17 +97,26 @@ function createTable(){
 }
 
 function set(k,v){
+    var insertSQL = "INSERT INTO "+tableName+"(k, v) VALUES('"+k+"', '"+v+"')";
+    var updateSQL = "UPDATE "+tableName+" SET v = '"+v+"' WHERE k = '"+k+"'";
     return initPromise.then(function () {
-        return db.run("INSERT INTO "+tableName+"(k, v) VALUES('"+k+"', '"+v+"')");
-    })
+        return get(k);
+    }).then(function (data) {
+        if(data){
+            return db.run(updateSQL);
+        }else{
+            return db.run(insertSQL);
+        }
+    });
 }
 
 function get(k) {
     return initPromise.then(function () {
-        return db.get("SELECT v FROM "+tableName+" WHERE k = '"+k+"'").then(function (res) {
-            return res.v;
+        var sql = "SELECT * FROM "+tableName+" WHERE k = '"+k+"'";
+        return db.get(sql).then(function (res) {
+            return res && res.v;
         });
-    })
+    });
 }
 
 var initPromise = createTable();
@@ -106,7 +127,7 @@ module.exports = {
     },
     get:function (k) {
         return get(k).then(function (v) {
-            return JSON.parse(v).v;
+            return v && JSON.parse(v).v;
         })
     }
 };

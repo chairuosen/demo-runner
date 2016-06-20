@@ -74,6 +74,19 @@
 </template>
 
 <script>
+    var api = require('../api');
+
+    function getCharFromCode(code){
+        return String.fromCharCode(code).toLowerCase();
+    }
+    $(document).off('.save').on('keydown.save', function(e) {
+        if((e.ctrlKey||e.metaKey) && (getCharFromCode(e.which) == 's')) {
+            e.preventDefault();
+            $(document).trigger('save');
+            return false;
+        }
+    });
+
     module.exports = {
         data: function () {
             return {
@@ -92,15 +105,14 @@
             external:require('components/external')
         },
         ready: function () {
-            function getCharFromCode(code){
-                return String.fromCharCode(code).toLowerCase();
-            }
-            $(document).off('.preview').on('keydown.preview', function(e) {
-                if((e.ctrlKey||e.metaKey) && (getCharFromCode(e.which) == 's')) {
-                    e.preventDefault();
-                    $(document).trigger('save');
-                    return false;
-                }
+            var vm = this;
+            $(document).on('save',function () {
+                api.saveCode(vm.source).then(function (res) {
+                    console.log(res.id);
+                    return api.getCode(res.id).then(function (res) {
+                        console.log(res.data);
+                    })
+                });
             });
         }
     }

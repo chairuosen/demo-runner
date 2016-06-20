@@ -1,7 +1,17 @@
 var db = require('./database');
 
-db.set('a',{abc:1}).then(function () {
-    return db.get('a')
-}).then(function (res) {
-    console.log(res);
-})
+function getHash(str) {
+    return require('crypto').createHash('md5').update(str).digest("hex");
+}
+
+module.exports = {
+    save:function (object) {
+        var id = getHash(JSON.stringify(object));
+        return db.set(id,object).then(function () {
+            return id;
+        });
+    },
+    get:function (id) {
+        return db.get(id);
+    }
+}
