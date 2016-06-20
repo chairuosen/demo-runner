@@ -66,10 +66,10 @@
                 <editor :content.sync="source.less" lang="less" ></editor>
             </div>
             <div class="edit-area" style="height:10%;" name="external">
-                <external :resource="resource"></external>
+                <external :resource="source.resource"></external>
             </div>
             <div class="edit-area" style="height:50%;" name="result">
-                <previewer :html="source.html" :less="source.less" :resource="resource" :js="source.js"></previewer>
+                <previewer :html="source.html" :less="source.less" :resource="source.resource" :js="source.js"></previewer>
             </div>
         </div>
     </div>
@@ -111,9 +111,9 @@
                 source:{
                     html:"",
                     less:"",
-                    js:""
-                },
-                resource:[]
+                    js:"",
+                    resource:[]
+                }
             }
         },
         methods: {},
@@ -131,7 +131,8 @@
                         $.extend(vm.source,{
                             html:res.data.html,
                             less:res.data.less,
-                            js:res.data.js
+                            js:res.data.js,
+                            resource:res.data.resource||[]
                         });
                     }
                     vm.show = true;
