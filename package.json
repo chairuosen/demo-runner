@@ -8,7 +8,7 @@
     "clean": "rm -rf ./dist/*",
     "build": "webpack --production",
     "start-server": "node server/app.js",
-    "dev": "node dev.js"
+    "dev": "mkdir database;node dev.js"
   },
   "repository": {
     "type": "git",
