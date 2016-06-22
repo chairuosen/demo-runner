@@ -1,10 +1,10 @@
 demo runner
 =======================
-A client-side code runner for html/css/js;
+A code runner for html/css/js;
 
 Demo: http://demo.ruosen.io/demo-runner/
 
-Press `cmd + s` in editor to preview
+Press `cmd + s` or `ctrl + s` in editor to preview & save;
 
 
 # Init
@@ -15,7 +15,7 @@ npm install
     
 # Dev
 
-start both client-dev and server
+start both webpack-dev-server and node server
 
 ```
 npm run dev
