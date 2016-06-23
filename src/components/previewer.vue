@@ -8,12 +8,26 @@
 </template>
 <script>
     var less = require('less');
+    var Console = function () {
+        var o = {};
+        ['log','info','warn','error','table'].forEach(function (name) {
+            o[name] = function () {
+                var args = [].slice.call(arguments);
+                if(_console){
+                    _console[name].apply(_console,args);
+                }
+                window.parent.postMessage({event:name,args:args},"*");
+            }
+        });
+        return o;
+    };
     module.exports = {
         props:{
             html:String,
             js:String,
             less:String,
-            resource:Array
+            resource:Array,
+            console:Array
         },
         data:function () {
             return {
@@ -27,6 +41,7 @@
                 $iframe.attr('height','100%');
                 $iframe.attr('width','100%');
                 $(this.$els.iframe).empty().append($iframe);
+                this.console = [];
                 var iframe = $iframe[0];
                 var _window = iframe.contentWindow;
                 var htmlTemplate = "<html><head>__head__</head><body>__body__</body></html>";
@@ -44,6 +59,7 @@
                 htmlTemplate = htmlTemplate.replace('__head__',headHtml);
                 htmlTemplate = htmlTemplate.replace('__body__',html);
 
+                _window.eval('window._console=window.console;window.console='+Console.toString()+"()");
                 _window.document.open();
                 _window.document.write(htmlTemplate);
                 _window.document.close();
@@ -61,7 +77,13 @@
 
             $(document).on('preview',function () {
                 vm.preview();
-            })
+            });
+            $(window).on('message',function (e) {
+                var consoleEvent = e.originalEvent.data;
+                if(consoleEvent.event){
+                    vm.console.push(consoleEvent)
+                }
+            });
         }
     }
 </script>

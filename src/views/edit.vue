@@ -62,14 +62,23 @@
         <div class="right">
 
 
-            <div class="edit-area" style="height:40%;" name="less">
+            <div class="edit-area" style="height:30%;" name="less">
                 <editor :content.sync="source.less" lang="less" ></editor>
             </div>
             <div class="edit-area" style="height:10%;" name="external">
                 <external :resource="source.resource"></external>
             </div>
+            <div class="edit-area" style="height:10%;" name="console">
+                <console :console="console"></console>
+            </div>
             <div class="edit-area" style="height:50%;" name="result">
-                <previewer :html="source.html" :less="source.less" :resource="source.resource" :js="source.js"></previewer>
+                <previewer
+                        :html="source.html"
+                        :less="source.less"
+                        :resource="source.resource"
+                        :js="source.js"
+                        :console.sync="console"
+                ></previewer>
             </div>
         </div>
     </div>
@@ -113,14 +122,16 @@
                     less:"",
                     js:"",
                     resource:[]
-                }
+                },
+                console:[]
             }
         },
         methods: {},
         components: {
             editor:require('vue-ace-editor'),
             previewer:require('components/previewer'),
-            external:require('components/external')
+            external:require('components/external'),
+            console:require('components/console')
         },
         events:{
             'vue-ace-editor:init':function () {
