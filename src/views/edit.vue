@@ -147,6 +147,8 @@
                     require('vue').nextTick(function () {
                         $(document).trigger('preview');
                     })
+                },function () {
+                    vm.show = true;
                 });
             }else{
                 vm.show = true;
