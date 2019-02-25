@@ -6,7 +6,7 @@ function getHash(str) {
 
 module.exports = {
     save:function (object) {
-        var id = getHash(JSON.stringify(object));
+        var id = object.id || getHash(JSON.stringify(object));
         return db.set(id,object).then(function () {
             return id;
         });

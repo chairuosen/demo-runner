@@ -109,6 +109,7 @@
             return {
                 show:false,
                 source:{
+                    id:'',
                     html:"",
                     less:"",
                     js:"",
@@ -137,6 +138,7 @@
                 api.getCode(initId).then(function (res) {
                     if(res.data){
                         $.extend(vm.source,{
+                            id:res.data.id,
                             html:res.data.html,
                             less:res.data.less,
                             js:res.data.js,
@@ -156,6 +158,7 @@
             $(document).on('save',function () {
                 $(document).trigger('preview');
                 api.saveCode(vm.source).then(function (res) {
+                    vm.source.id = res.id;
                     changeLocation(res.id)
                 });
             });
