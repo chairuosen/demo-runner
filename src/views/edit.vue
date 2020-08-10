@@ -66,10 +66,10 @@
                 <div class="edit-area" style="height:40%;" name="less">
                     <editor :content.sync="source.less" lang="less" ></editor>
                 </div>
-                <div class="edit-area" style="height:10%;" name="external">
-                    <external :resource="source.resource"></external>
-                </div>
-                <div class="edit-area" style="height:50%;" name="result">
+<!--                <div class="edit-area" style="height:10%;" name="external">-->
+<!--                    <external :resource="source.resource"></external>-->
+<!--                </div>-->
+                <div class="edit-area" style="height:60%;" name="result">
                     <previewer :html="source.html" :less="source.less" :resource="source.resource" :js="source.js"></previewer>
                 </div>
             </div>
