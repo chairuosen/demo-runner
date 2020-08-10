@@ -50,27 +50,32 @@
 </style>
 <template>
     <div class="height100" v-show="show">
-        <div class="left">
-            <div class="edit-area" style="height:40%;" name="html">
-                <editor :content.sync="source.html" lang="html" ></editor>
-            </div>
-            <div class="edit-area" style="height:60%;" name="js">
-                <editor :content.sync="source.js" lang="javascript" ></editor>
-            </div>
+        <div v-if="!isPreview">
+            <div class="left">
+                <div class="edit-area" style="height:40%;" name="html">
+                    <editor :content.sync="source.html" lang="html" ></editor>
+                </div>
+                <div class="edit-area" style="height:60%;" name="js">
+                    <editor :content.sync="source.js" lang="javascript" ></editor>
+                </div>
 
+            </div>
+            <div class="right">
+
+
+                <div class="edit-area" style="height:40%;" name="less">
+                    <editor :content.sync="source.less" lang="less" ></editor>
+                </div>
+                <div class="edit-area" style="height:10%;" name="external">
+                    <external :resource="source.resource"></external>
+                </div>
+                <div class="edit-area" style="height:50%;" name="result">
+                    <previewer :html="source.html" :less="source.less" :resource="source.resource" :js="source.js"></previewer>
+                </div>
+            </div>
         </div>
-        <div class="right">
-
-
-            <div class="edit-area" style="height:40%;" name="less">
-                <editor :content.sync="source.less" lang="less" ></editor>
-            </div>
-            <div class="edit-area" style="height:10%;" name="external">
-                <external :resource="source.resource"></external>
-            </div>
-            <div class="edit-area" style="height:50%;" name="result">
-                <previewer :html="source.html" :less="source.less" :resource="source.resource" :js="source.js"></previewer>
-            </div>
+        <div v-if="isPreview">
+            <previewer :html="source.html" :less="source.less" :resource="source.resource" :js="source.js"></previewer>
         </div>
     </div>
 </template>
@@ -108,6 +113,7 @@
         data: function () {
             return {
                 show:false,
+                isPreview: false,
                 source:{
                     id:'',
                     html:"",
@@ -134,6 +140,8 @@
         ready: function () {
             var vm = this;
             var initId = getLocationParam('id');
+            var preview = getLocationParam('preview');
+            vm.isPreview = !!preview;
             if(initId){
                 api.getCode(initId).then(function (res) {
                     if(res.data){
