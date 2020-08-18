@@ -50,6 +50,7 @@
 </style>
 <template>
     <div class="height100" v-show="show">
+    <meta name="viewport" content="user-scalable=no,width=device-width,initial-scale=1,user-scalable=0,maximum-scale=1">
         <div v-if="!isPreview">
             <div class="left">
                 <div class="edit-area" style="height:40%;" name="html">
