@@ -74,7 +74,7 @@
                 </div>
             </div>
         </div>
-        <div v-if="isPreview">
+        <div v-if="isPreview" style="height:100%">
             <previewer :html="source.html" :less="source.less" :resource="source.resource" :js="source.js"></previewer>
         </div>
     </div>
