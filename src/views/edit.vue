@@ -67,10 +67,11 @@
                 <div class="edit-area" style="height:40%;" name="less">
                     <editor :content.sync="source.less" lang="less" ></editor>
                 </div>
-<!--                <div class="edit-area" style="height:10%;" name="external">-->
-<!--                    <external :resource="source.resource"></external>-->
-<!--                </div>-->
-                <div class="edit-area" style="height:60%;" name="result">
+                <div class="edit-area" style="height:10%;" name="external">
+                    <button @click="save()">save</button>
+                    <button @click="preview()">preview</button>
+                </div>
+                <div class="edit-area" style="height:50%;" name="result">
                     <previewer :html="source.html" :less="source.less" :resource="source.resource" :js="source.js"></previewer>
                 </div>
             </div>
@@ -124,7 +125,21 @@
                 }
             }
         },
-        methods: {},
+        methods: {
+            save(){
+                var vm = this;
+                $(document).trigger('preview');
+                return api.saveCode(vm.source).then(function (res) {
+                    vm.source.id = res.id;
+                    changeLocation(res.id)
+                });
+            },
+            preview(){
+                this.save().then(function () {
+                    window.open(window.location.href + '&preview=1');
+                })
+            }
+        },
         components: {
             editor:require('vue-ace-editor'),
             previewer:require('components/previewer'),
@@ -165,11 +180,7 @@
                 vm.show = true;
             }
             $(document).on('save',function () {
-                $(document).trigger('preview');
-                api.saveCode(vm.source).then(function (res) {
-                    vm.source.id = res.id;
-                    changeLocation(res.id)
-                });
+                vm.save();
             });
         }
     }
