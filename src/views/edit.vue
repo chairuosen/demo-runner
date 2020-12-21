@@ -53,8 +53,12 @@
     <meta name="viewport" content="user-scalable=no,width=device-width,initial-scale=1,user-scalable=0,maximum-scale=1">
         <div v-if="!isPreview">
             <div class="left">
-                <div class="edit-area" style="height:40%;" name="html">
+                <div class="edit-area" style="height:40%;position:relative;" name="html">
                     <editor :content.sync="source.html" lang="html" ></editor>
+                    <div style="position:absolute;right:0;bottom:0;">
+                      <button @click="save()">save</button>
+                      <button @click="preview()">preview</button>
+                    </div>
                 </div>
                 <div class="edit-area" style="height:60%;" name="js">
                     <editor :content.sync="source.js" lang="javascript" ></editor>
@@ -62,16 +66,10 @@
 
             </div>
             <div class="right">
-
-
                 <div class="edit-area" style="height:40%;" name="less">
                     <editor :content.sync="source.less" lang="less" ></editor>
                 </div>
-                <div class="edit-area" style="height:10%;" name="external">
-                    <button @click="save()">save</button>
-                    <button @click="preview()">preview</button>
-                </div>
-                <div class="edit-area" style="height:50%;" name="result">
+                <div class="edit-area" style="height:60%;" name="result">
                     <previewer :html="source.html" :less="source.less" :resource="source.resource" :js="source.js"></previewer>
                 </div>
             </div>
