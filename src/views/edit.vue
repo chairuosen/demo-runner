@@ -55,7 +55,7 @@
             <div class="left">
                 <div class="edit-area" style="height:40%;position:relative;" name="html">
                     <editor :content.sync="source.html" lang="html" ></editor>
-                    <div style="position:absolute;right:0;bottom:0;">
+                    <div style="position:absolute;right:0;bottom:0;z-index:99">
                       <button @click="save()">save</button>
                       <button @click="preview()">preview</button>
                     </div>
